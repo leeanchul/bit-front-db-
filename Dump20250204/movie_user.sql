@@ -1,0 +1,55 @@
+-- MySQL dump 10.13  Distrib 8.0.40, for Win64 (x86_64)
+--
+-- Host: localhost    Database: movie
+-- ------------------------------------------------------
+-- Server version	8.0.40
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `user` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `username` varchar(45) NOT NULL,
+  `password` varchar(80) NOT NULL,
+  `nickname` varchar(45) NOT NULL,
+  `role` varchar(45) NOT NULL DEFAULT 'ROLE_USER',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username_UNIQUE` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'a','$2a$10$ArtK3lCj.ypirKwa1xTbFOTYTlPNjndVHHnpyFaGn/ysGCMcRe3Wu','test','ADMIN'),(9,'t1','$2a$10$MFN/xCTBwEDhtA9CfZ2u3eOShoGZAbaLqxOMOB1/cbuO3Uye2mAoa','t1','ROLE_REVIEWER'),(14,'t2','$2a$10$jKJEP4xO.4UTs8vfZq4JCO8fBy6oEk5YzSsnvioDMWVEhdKq72i6O','t2','ROLE_USER'),(15,'test','$2a$10$JK7CyYUjsAG9AlYTuLLKEeoZRVbQwVR9OdN.CsvYYq9/ps5dVegKe','test','ROLE_USER'),(16,'qwet123','$2a$10$ehKRJYsfO3MdjEoAy7O44.zNgXBTNffh2vs3Xn2hHVSMWjwm5MfYS','1234','ROLE_USER'),(18,'tewqt','$2a$10$Io/hyB20bGM2ZoDZtO9AZOWUYltWzl3UWZwfAYLspPu5w1CW3vQri','','ROLE_USER'),(19,'aqwe','$2a$10$3wBxLuC1khDwTgyO0PdoLOWuQ9JPFEuoA0AUoQ7YCsgqkZnAbn6he','aqwe','ROLE_USER'),(20,'aa','$2a$10$8W6wLxzkLp7mncfun.QR7ezD4svSGpxT39S6yQvHNsqr0hqEfXkDm','a','ROLE_USER'),(21,'a1','$2a$10$QVC4CqSZi8tekU0I7ia0KuiYGe7VhiK3.62Y7SUFSp4pv3uWajWci','aa','ROLE_USER'),(22,'a23','$2a$10$At30xNRI2qqMqNIl/Y8bmOJjY1pSOW.m0QHcu5KCdVE1B.k2aIp6W','a23','ROLE_USER'),(23,'t','$2a$10$lhjP2fiC3NZBRLQdngVhauvEbHgNtIWp/.niqan1ioFKaIZTP5Xz6','t','ROLE_USER');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2025-02-04 20:21:23
