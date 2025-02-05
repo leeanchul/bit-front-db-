@@ -90,7 +90,7 @@ function MovieAll(){
                 navigate('/')
                 sessionStorage.removeItem('login')
             }}>로그아웃</Button>
-            <Button variant="dark" onClick={InsertOpen}>글 추가</Button>
+            <Button variant="dark" onClick={InsertOpen}>영화 추가</Button>
             <Insert show={show} InsertClose={InsertClose}/>
            <Table>
                <thead>

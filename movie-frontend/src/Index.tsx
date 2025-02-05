@@ -55,8 +55,9 @@ export function Index() {
     return (
         <>
             <h1>로그인</h1>
-            <input name='username' value={username} onChange={onChange} />
-            <input type='password' name='password' value={password} onChange={onChange} />
+            아이디: <input name='username' value={username} onChange={onChange} />
+            <br/>
+            비밀번호: <input type='password' name='password' value={password} onChange={onChange} />
             <br />
             <button onClick={onLogin}>로그인</button>
             <button onClick={handleShow}>회원 가입</button>
