@@ -1,32 +1,28 @@
-import {Button, Modal} from "react-bootstrap";
+import Swal from "sweetalert2";
 import {useState} from "react";
 import axios from "axios";
-import Swal from "sweetalert2";
+import {Button, Modal} from "react-bootstrap";
 
 export function ReviewUpdate({show,close,id,refresh}){
 
-    let [content, setContent] = useState('');
+    const [review, setReview] = useState('');
 
-    let onChange = (e) => {
-        setContent(e.target.value);
+    const onChange = (e) => {
+        setReview(e.target.value);
     }
 
-    let onUpdate=()=>{
+    const onUpdate=()=>{
         axios
-            .post('http://localhost:8080/api/review/update',
-                {content:content ,id:id})
+            .post('http://localhost:9000/api/review/update',
+                {review:review ,id:id})
             .then((resp) => {
                 const {data}=resp
-                if(data.result==='success'){
+                refresh()
+                close()
                     Swal.fire({
                         icon: 'success',
                         title: '리뷰 수정 완료~!!'
                     })
-                }else{
-                    console.log(data.message)
-                }
-                refresh()
-                close()
             })
     }
     return (
@@ -36,10 +32,10 @@ export function ReviewUpdate({show,close,id,refresh}){
                 onHide={close}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title> 수정 </Modal.Title>
+                    <Modal.Title>댓글 수정 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <input name='content' onChange={onChange}/>
+                  수정할 댓글: <input name='review' onChange={onChange}/>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={close}>

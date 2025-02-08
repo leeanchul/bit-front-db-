@@ -4,10 +4,9 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import {initialstate, Reducer} from "../../reducer/Reduecr.tsx";
 
-export function Insert({show, InsertClose}) {
+export function Insert({show, InsertClose,refresh}) {
     let [state, dispatch] = useReducer(Reducer, initialstate);
     let {title, content, director,relaseDate} = state.movie
-
     let onChange = (e) => {
         let {name, value} = e.target;
 
@@ -52,6 +51,8 @@ export function Insert({show, InsertClose}) {
             })
             .then((resp) => {
                 let {data} =resp
+                refresh()
+                InsertClose();
                 Swal.fire({
                     icon: 'success',
                     title: '영화 추가'
@@ -75,7 +76,7 @@ export function Insert({show, InsertClose}) {
                     <Modal.Title>영화 등록</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    영화 제목: <input name='title' onChange={onChange}/>
+                    영화 제목: <input name='title' value={title} onChange={onChange}/>
                     <br/>
                     감독 이름: <input name='director' onChange={onChange}/>
                     <br/>
@@ -85,7 +86,12 @@ export function Insert({show, InsertClose}) {
                     <input type="file" name='file' onChange={onFileChange}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={InsertClose}>
+                    <Button variant="secondary" onClick={()=>{
+                        dispatch({
+                            type:'RESET'
+                        })
+                        InsertClose()
+                    }}>
                         등록 취소
                     </Button>
                     <Button variant="primary" onClick={onInsert}>등록</Button>

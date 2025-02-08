@@ -58,6 +58,7 @@ export function MovieOne(){
                 setCount(data.count)
             })
     })
+    // 이미지 출력
     const [imageSrc, setImageSrc] = useState('');
     useEffect(() => {
         if (state.movieOne.filePath && state.movieOne.filePath !== ''){
@@ -73,9 +74,7 @@ export function MovieOne(){
 
     return(
         <>
-            <Button variant="dark" onClick={() => {
-                navigate('/movie/movieAll/1')
-            }}>목록 보기</Button>
+
             <Table>
                 <thead/>
                 <tbody>
@@ -122,8 +121,8 @@ export function MovieOne(){
                 </tr>
                 </tbody>
             </Table>
-            <Button variant="dark" onClick={openU}>수정</Button>
-            <Button variant="dark" onClick={openD}>삭제</Button>
+            <Button variant="dark" onClick={openU}>수정(관리자)</Button>
+            <Button variant="dark" onClick={openD}>삭제(관리자)</Button>
             <Delete showD={showD} closeD={closeD} id={state.movieOne.id}/>
             <Update showU={showU} closeU={closeU} id={state.movieOne.id} test={test}/>
             <br/>

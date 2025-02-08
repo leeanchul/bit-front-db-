@@ -3,13 +3,14 @@ import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import {Button, Modal} from "react-bootstrap";
 
-export function ReviewDelete({showD, closeD, id, movieId}) {
+export function ReviewDelete({showD, closeD, id, movieId,refresh}) {
     let navigate = useNavigate()
     let onDelete = () => {
-        axios.get(`http://localhost:9000/api/scope/delete/${id}`)
+        axios.get(`http://localhost:9000/api/review/delete/${id}`)
             .then((resp) => {
                 let {data} = resp
-
+                refresh()
+                closeD()
                 Swal.fire({
                     icon: 'success',
                     title: '삭제되었습니다.'
@@ -22,7 +23,7 @@ export function ReviewDelete({showD, closeD, id, movieId}) {
                 title: '본인이 작성한 댓글이 아닙니다..'
             })
         })
-        closeD()
+
     }
 
     return (

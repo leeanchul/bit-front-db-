@@ -7,7 +7,7 @@ import {ReviewInsert} from "../ReviewModal/ReviewInsert.tsx";
 import {ReviewUpdate} from "../ReviewModal/ReviewUpdate.tsx";
 import {ReviewDelete} from "../ReviewModal/ReviewDelete.tsx";
 
-function Print({review}){
+function Print({review,refresh}){
     const [show,setShow]=useState(false)
     const close=()=>setShow(false)
     const open=()=>setShow(true)
@@ -24,8 +24,8 @@ function Print({review}){
                 <br/>
                 <Button variant="dark" onClick={open}>수정</Button>
                 <Button variant="dark" onClick={openD}>삭제</Button>
-                <ReviewUpdate show={show} close={close} id={review.id}/>
-                <ReviewDelete showD={showD} closeD={closeD} id={review.id} nickname={review.nickname} movieId={review.movieId}/>
+                <ReviewUpdate show={show} close={close} id={review.id} refresh={refresh}/>
+                <ReviewDelete showD={showD} closeD={closeD} id={review.id} nickname={review.nickname} movieId={review.movieId} refresh={refresh}/>
                 <hr/>
             </li>
         </ul>
@@ -39,8 +39,7 @@ export function ReviewAll({movieId}) {
     const close = () => setShow(false)
     const open = () => setShow(true)
 
-    useEffect(() => {
-        // movieId가 없는데 render 하는 경우가 있어서 추가
+    const refresh=()=>{
         if(movieId>0) {
             axios
                 .get(`http://localhost:8080/api/review/reviewAll/${movieId}`)
@@ -54,16 +53,20 @@ export function ReviewAll({movieId}) {
                     }
                 })
         }
-    },[movieId,show]);
+    }
+    useEffect(() => {
+        // movieId가 없는데 render 하는 경우가 있어서 추가
+        refresh()
+    },[movieId]);
 
 
     return (
         <>
             <Button variant="dark" onClick={open}>댓글 달기</Button>
             <hr/>
-            <ReviewInsert show={show} close={close} movieId={movieId}/>
+            <ReviewInsert show={show} close={close} movieId={movieId} refresh={refresh}/>
             {state.reviewList.map(review=>(
-                <Print review={review} key={review.id}/>
+                <Print review={review} key={review.id} refresh={refresh}/>
             ))}
         </>
     )

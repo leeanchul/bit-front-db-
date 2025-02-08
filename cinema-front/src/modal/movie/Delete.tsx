@@ -10,11 +10,10 @@ export function Delete({showD, closeD, id}) {
             .then((resp) => {
                 let {data} = resp
                 closeD()
+                navigate('/movie/movieAll/1')
                     Swal.fire({
                         icon: 'success',
                         title: '삭제되었습니다.'
-                    }).then(() => {
-                        navigate('/movie/movieAll')
                     })
             })
     }

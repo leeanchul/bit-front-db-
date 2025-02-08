@@ -12,7 +12,7 @@ export const initialstate={
         date:''
     },
     movieOne:{
-        id:'',
+        id:0,
         title:'',
         director:'',
         content:'',
@@ -59,6 +59,11 @@ export function Reducer(state,action){
         case 'ON_CHANGE_MOVIE':
             return {
                 movie: {...state.movie, [action.name]: action.value}
+            }
+        case 'RESET_MOVIE':
+            return {
+                ...state,  // 영화 리스트 상태는 유지
+                movie: initialstate.movie  // movie만 초기화
             }
         case 'ON_SHOWONE':
             return{

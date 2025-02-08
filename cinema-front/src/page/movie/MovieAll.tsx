@@ -10,6 +10,19 @@ function Print({movie}){
 
     const [score, setScore] = useState(0)
     const [count, setCount] = useState(0)
+    const [imageSrc, setImageSrc] = useState('');
+    useEffect(() => {
+        if (movie.filePath && movie.filePath !== ''){
+            axios.get(`http://localhost:9000/api/movie/upload/${movie.filePath}`, {
+                responseType: 'blob' // responseType을 'blob'으로 변경
+            }).then((response) => {
+                const blob = response.data; // 응답 데이터를 그대로 사용
+                const imageUrl = URL.createObjectURL(blob); // Blob을 URL로 변환
+                setImageSrc(imageUrl); // 변환된 URL을 상태에 저장
+            })
+        }
+    }, [movie.filePath]);
+
     useEffect(()=>{
         axios
             .post(`http://localhost:9000/api/scope/scopeAvg`,
@@ -19,38 +32,47 @@ function Print({movie}){
                 setScore(data.maxAvg)
                 setCount(data.count)
             })
-    },[])
+    },[count])
     let move=()=>{
         navigate(`/movie/movieOne/${movie.id}`)
     }
     return (
         <tr onClick={move}>
+            <td>{imageSrc ? <img width='150px' height='150px' src={imageSrc} alt="이미지 없음"/> :
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     className="bi bi-image-alt" viewBox="0 0 16 16">
+                    <path
+                        d="M7 2.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0m4.225 4.053a.5.5 0 0 0-.577.093l-3.71 4.71-2.66-2.772a.5.5 0 0 0-.63.062L.002 13v2a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4.5z"/>
+                </svg>}</td>
             <td>{movie.id}</td>
             <td>{movie.title}</td>
             <td>{movie.director}</td>
-            <td>{movie.relaseDate}</td>
             {count === 0 ? <td>별점이없어요</td> : <td>평균: {score} (총: {count}명)</td>}
         </tr>
     )
 }
 
-export function MovieAll(){
-    const [state,dispatch]=useReducer(Reducer,initialstate)
-    const navigate=useNavigate()
-    const {pageNo}=useParams()
+export function MovieAll() {
+    const [state, dispatch] = useReducer(Reducer, initialstate)
+    const navigate = useNavigate()
+    const {pageNo} = useParams()
     // 영화 추가
-    const [show,setShow]=useState(false)
-    const InsertClose=()=>setShow(false)
-    const InsertOpen=()=>setShow(true)
+    const [show, setShow] = useState(false)
+    const InsertClose = ()=>{
+        dispatch({
+            type:'RESET_MOVIE'
+        })
+        setShow(false)
+    }
+    const InsertOpen = () => setShow(true)
 
-
-    useEffect(()=>{
+    const refresh=()=>{
         axios
             .get(`http://localhost:9000/api/movie/movieAll/${pageNo}`)
-            .then((resp)=>{
-                const {data}=resp
+            .then((resp) => {
+                const {data} = resp
                 dispatch({
-                    type:'ON_MOVIEALL',
+                    type: 'ON_MOVIEALL',
                     list: data.content,
                     startPage: data.startPage,
                     endPage: data.endPage,
@@ -58,7 +80,11 @@ export function MovieAll(){
                     currentPage: data.currentPage
                 })
             })
-    },[pageNo,show])
+    }
+
+    useEffect(() => {
+        refresh()
+    },[pageNo])
 
 
     // page
@@ -85,20 +111,17 @@ export function MovieAll(){
 
     return (
         <>
-            <Button variant="dark" onClick={()=>{
-                navigate('/')
-               localStorage.removeItem("token")
-                delete axios.defaults.headers.common["Authorization"];
-            }}>로그아웃</Button>
-            <Button variant="dark" onClick={InsertOpen}>영화 추가</Button>
-            <Insert show={show} InsertClose={InsertClose}/>
+
+            <Button variant="dark" onClick={InsertOpen} >영화 추가(관리자)</Button>
+            <Insert show={show} InsertClose={InsertClose} refresh={refresh} />
             <Table>
                 <thead>
                 <tr>
+                    <td>사진</td>
                     <td>번호</td>
                     <td>제목</td>
                     <td>감독</td>
-                    <td>개봉일</td>
+                    <td>평점</td>
                 </tr>
                 </thead>
                 <tbody>

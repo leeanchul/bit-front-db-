@@ -3,7 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import {useNavigate} from "react-router-dom";
 
-export function ReviewDelete({showD,closeD,id,nickname,movieId}){
+export function ReviewDelete({showD,closeD,id,nickname,movieId,refresh}){
     let navigate=useNavigate()
     let onDelete=()=>{
         let login = JSON.parse(sessionStorage.getItem('login'))
@@ -11,12 +11,16 @@ export function ReviewDelete({showD,closeD,id,nickname,movieId}){
             axios.get(`http://localhost:8080/api/review/delete/${id}`)
                 .then((resp) => {
                     let {data} = resp
+                    closeD()
                     if (data.result === 'success') {
+                        refresh()
+                        navigate(`/movie/movieOne/${movieId}`)
                         Swal.fire({
                             icon: 'success',
                             title: '삭제되었습니다.'
                         }).then(() => {
-                            navigate(`/movie/movieOne/${movieId}`)
+
+
                         })
                     }
                 })
@@ -26,6 +30,8 @@ export function ReviewDelete({showD,closeD,id,nickname,movieId}){
                 title: '본인이 작성한 게시글이 아닙니다..'
             })
         }
+
+        closeD()
     }
 
     return (

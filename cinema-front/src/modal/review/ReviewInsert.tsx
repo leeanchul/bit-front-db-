@@ -3,7 +3,7 @@ import {useState} from "react";
 import axios from "axios";
 import {Button, Modal} from "react-bootstrap";
 
-export function ReviewInsert({show,close,movieId}) {
+export function ReviewInsert({show,close,movieId,refresh}) {
 
     const [review, setReview] = useState('');
 
@@ -20,13 +20,16 @@ export function ReviewInsert({show,close,movieId}) {
             return
         }
         axios
-            .post(`http://localhost:9000/api/scope/reviewInsert`,
+            .post(`http://localhost:9000/api/review/reviewInsert`,
                 { review: review, movieId: movieId})
             .then((resp) => {
                 const {data} = resp
+                setReview('');
+                refresh()
+                close()
                     Swal.fire({
                         icon: 'success',
-                        title: '리뷰 작성 완료!'
+                        title: data
                     })
 
             }).catch(()=>{
@@ -35,7 +38,6 @@ export function ReviewInsert({show,close,movieId}) {
                 title: "리뷰 작성은 한번만 됩니다."
             })
         })
-        close()
     }
 
     return (
@@ -49,10 +51,13 @@ export function ReviewInsert({show,close,movieId}) {
                 </Modal.Header>
                 <Modal.Body>
                     <h1>리뷰는 영화 한편당 하나만 달수있어요!</h1>
-                    <input name='content' onChange={onChange}/>
+                    <input name='review' value={review} onChange={onChange}/>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={close}>
+                    <Button variant="secondary" onClick={()=>{
+                        setReview('');
+                        close()
+                    }}>
                         취소
                     </Button>
                     <Button variant="primary" onClick={onInsert}>완료</Button>

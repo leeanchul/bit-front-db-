@@ -3,7 +3,7 @@ import {useState} from "react";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-export function ReviewInsert({show,close,movieId}){
+export function ReviewInsert({show,close,movieId,refresh}){
 
     const [content, setContent] = useState('');
 
@@ -36,6 +36,7 @@ export function ReviewInsert({show,close,movieId}){
                         title: data.message
                     })
                 }
+                refresh()
                 close()
             })
     }
