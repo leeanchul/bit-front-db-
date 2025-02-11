@@ -4,6 +4,8 @@ import {CinemaInsert} from "../../modal/cinema/CinemaInsert.tsx";
 import {initialstateC, ReducerCinema} from "../../reducer/ReducerCinema.tsx";
 import axios from "axios";
 import {useNavigate, useParams} from "react-router-dom";
+import { CinemaDelete } from "../../modal/cinema/CinemaDelete.tsx";
+import { CinemaUpdate } from "../../modal/cinema/CinemaUpdate.tsx";
 
 export function CinemaAll() {
     const [state, dispatch] = useReducer(ReducerCinema, initialstateC)
@@ -17,6 +19,21 @@ export function CinemaAll() {
         setShowI(false)
     }
     const openI = () => setShowI(true)
+    
+    // 수정 모달
+    const [showU,setShowU]=useState(false)
+    const closeU=()=>{
+        dispatch({
+            type:"ON_RESET"
+        })
+        setShowU(false)
+    }
+    const openU=()=>setShowU(true)
+
+    // 삭제 모달
+    const [showD,setShowD] = useState(false)
+    const closeD=()=>setShowD(false)
+    const openD=()=>setShowD(true)
 
     const navigate=useNavigate();
 
@@ -25,7 +42,6 @@ export function CinemaAll() {
             .get(`http://localhost:9000/api/cinema/cinemaAll/${pageNo}`)
             .then((resp) => {
                 const {data} = resp
-                console.log(data.content)
                 dispatch({
                     type: 'ON_CINEMAALL',
                     list: data.content,
@@ -41,7 +57,6 @@ export function CinemaAll() {
         refresh()
     }, [pageNo])
 
-    console.log(pageNo)
 
     // page
     let pageItems = []
@@ -84,9 +99,11 @@ export function CinemaAll() {
                 {state.cinemaAll.list.map((item) => <tr key={item.id}>
                     <td>{item.id}</td>
                     <td >{item.area}</td>
-                    <td  onClick={()=>{navigate('/cinema/cinemaOne/1')}}>{item.spotName}</td>
-                    <td><Button>수정</Button></td>
-                    <td><Button>삭제</Button></td>
+                    <td  onClick={()=>{navigate(`/cinema/cinemaOne/${item.spotName}/${item.id}`)}}>{item.spotName}</td>
+                    <td><Button variant="dark" onClick={openU}>수정</Button></td>
+                    <CinemaUpdate  showU={showU} closeU={closeU} id={item.id} refresh={refresh}/>
+                    <td><Button variant="dark" onClick={openD}>삭제</Button></td>
+                    <CinemaDelete showD={showD} closeD={closeD} id={item.id} refresh={refresh}/>
                 </tr>)}
 
                 <tr>

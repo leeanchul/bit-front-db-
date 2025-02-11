@@ -20,7 +20,7 @@ function Layout() {
                 <Route path='/movie/movieAll/:pageNo' element={<MovieAll />}/>
                 <Route path='/movie/movieOne/:id' element={<MovieOne />}/>
                 <Route path='/cinema/cinemaAll/:pageNo' element={<CinemaAll />}/>
-                <Route path='/cinema/cinemaOne/:id' element={<CinemaOne />}/>
+                <Route path='/cinema/cinemaOne/:spotName/:id' element={<CinemaOne />}/>
             </Routes>
         </>
     );
