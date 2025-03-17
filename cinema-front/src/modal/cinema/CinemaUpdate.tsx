@@ -44,7 +44,7 @@ export function CinemaUpdate({showU,closeU,id,refresh}){
             onHide={closeU}
         >
             <Modal.Header closeButton>
-                <Modal.Title>극장 등록</Modal.Title>
+                <Modal.Title>{id}극장 등록</Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <select name="area" onChange={onChange}>

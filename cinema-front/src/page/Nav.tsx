@@ -20,7 +20,8 @@ function CustomNav() {
                     >
                         <Nav.Link onClick={() => navigate('/movie/movieAll/1')}>영화목록</Nav.Link>
                         <Nav.Link onClick={() => navigate('/cinema/cinemaAll/1')}>극장목록</Nav.Link>
-                        <Nav.Link onClick={() => navigate('/cinema/cinemaTest/1')}>TEST</Nav.Link>
+                        <Nav.Link onClick={() => navigate('/cinema/cinemaTest/1')}>극장목록(TEST)</Nav.Link>
+                        <Nav.Link onClick={() => navigate('/user')}>사용자 정보</Nav.Link>
                         <Nav.Link onClick={() => navigate('/info')}>내 정보</Nav.Link>
                     </Nav>
                     <Nav className="d-flex">

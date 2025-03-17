@@ -32,10 +32,7 @@ export function MovieOne(){
     const [role, setRole] = useState('ROLE_USER')
     const [score, setScore] = useState(0)
     const [count, setCount] = useState(0)
-    // 별점 추가 모달
-    const [scope, setScope] = useState(false)
-    const closeScope = () => setScope(false)
-    const openScope = () => setScope(true)
+
     useEffect(() => {
         axios
             .get(`http://localhost:9000/api/movie/movieOne/${id}`)
@@ -126,11 +123,7 @@ export function MovieOne(){
             <Delete showD={showD} closeD={closeD} id={state.movieOne.id}/>
             <Update showU={showU} closeU={closeU} id={state.movieOne.id} test={test}/>
             <br/>
-            <hr/>
-            <Button variant="dark" onClick={openScope}>별점 남기기</Button>
-            <ScopeInsert show={scope} close={closeScope} movieId={state.movieOne.id}/>
-            <br/>
-            <hr/>
+
             <ReviewAll movieId={state.movieOne.id}/>
         </>
     )

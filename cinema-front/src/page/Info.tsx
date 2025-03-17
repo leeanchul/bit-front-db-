@@ -1,9 +1,10 @@
 import axios from "axios"
 import { useEffect, useReducer, useState } from "react"
 import { Button } from "react-bootstrap"
-import { initialstate, Reducer } from "./reducer/Reduecr"
+import { initialstate, Reducer } from "../reducer/Reduecr"
 import Swal from "sweetalert2"
-import { ScopeUpdate } from "./modal/scope/ScopeUpdate"
+import { InfoModal } from "../modal/InfoModal"
+import { ScopeUpdate } from "../modal/scope/ScopeUpdate"
 
 export function Info(){
 
@@ -15,9 +16,13 @@ export function Info(){
         username:''
     })
 
-    const [show,setShow]=useState(false)
-    const close=()=>setShow(false)
-    const open=()=>setShow(true)
+    const [showU,setShowU]=useState(false)
+    const closeU=()=>setShowU(false)
+    const openU=()=>setShowU(true)
+
+    const [showI,setShowI]=useState(false)
+    const closeI=()=>setShowI(false)
+    const openI=()=>setShowI(true)
     useEffect(()=>{
         refresh()
         axios
@@ -56,9 +61,10 @@ export function Info(){
         <>
             <h1>내 정보</h1>
             <h3>회원 번호: {info.id}</h3>
-            <h3>닉네임: {info.nickname}</h3>
+            <h3>닉네임: {info.nickname}  <Button variant="dark" onClick={openI}>정보 수정</Button></h3>
             <h3>아이디: {info.username}</h3>
-            <Button variant="dark">정보 수정</Button>
+           
+            <InfoModal show={showI} close={closeI} info={info} refresh={refresh}/>
             <h3>등급: {info.role}</h3>
             <Button >등업 신청</Button>
             <hr />
@@ -67,8 +73,8 @@ export function Info(){
                 <hr />
                 <h1>{item.id}</h1>
                 <p>영화: {item.title}  ,별점: {item.score} 날짜: {item.entryDate}</p>
-                <Button variant="dark" onClick={open}>수정</Button>
-                <ScopeUpdate show={show} close={close} id={item.id} refresh={refresh}/>
+                <Button variant="dark" onClick={openU}>수정</Button>
+                <ScopeUpdate show={showU} close={closeU} id={item.id} refresh={refresh}/>
                 <Button variant="dark" onClick={()=>onDelete(item.id)}>삭제</Button>
             </div>
                 

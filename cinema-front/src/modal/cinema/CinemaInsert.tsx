@@ -30,7 +30,7 @@ export function CinemaInsert({showI, closeI,refresh,state, dispatch}) {
                 const {data} = resp
                 refresh()
                 closeI()
-                console.log(data)
+            
             })
 
     }
@@ -50,11 +50,11 @@ export function CinemaInsert({showI, closeI,refresh,state, dispatch}) {
                         <option value='경기'>경기</option>
                         <option value='인천'>인천</option>
                         <option value='강원'>강원</option>
-                        <option value='대전/충청'>대전/충청</option>
+                        <option value='대전충청'>대전/충청</option>
                         <option value='대구'>대구</option>
-                        <option value='부산/울산'>부산/울산</option>
+                        <option value='부산울산'>부산/울산</option>
                         <option value='경상'>경상</option>
-                        <option value='광주/전라/제주'>광주/전라/제주</option>
+                        <option value='광주전라제주'>광주/전라/제주</option>
                     </select>
                     <br/>
                     극장 이름: <input name='spotName' onChange={onChange}/>

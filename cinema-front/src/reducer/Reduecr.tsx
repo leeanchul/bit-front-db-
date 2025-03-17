@@ -28,7 +28,8 @@ export const initialstate={
         currentPage: 0
     },
     reviewList:[],
-    infoList:[]
+    infoList:[],
+    userList:[]
 }
 
 
@@ -80,6 +81,11 @@ export function Reducer(state,action){
             return{
                 ...state,
                 infoList:action.infoList
+            }
+        case 'ON_USER':
+            return{
+                ...state,
+                userList:action.userList
             }
         default:
             return state;

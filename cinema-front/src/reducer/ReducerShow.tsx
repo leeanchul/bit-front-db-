@@ -3,14 +3,22 @@ import { MovieAll } from "../page/movie/MovieAll"
 export const initialstateS = {
     input:{
         type:'',
-        roomNum:'',
         age:'',
         movieId:'',
         showTime:0,
         cinemaId:''
     },
     movieList:[],
-    showList:[]
+    showList:[],
+    origin:{
+        type:'',
+        age:'',
+        movieId:'',
+        showTime:0,
+        cinemaId:''
+    },
+    rooms:[]
+
 }
 
 export function ReducerShow(state,action){
@@ -20,6 +28,11 @@ export function ReducerShow(state,action){
             ...state,
             input: {...state.input, [action.name]: action.value}
         }
+        case 'ON_rooms':
+            return{
+                ...state,
+                rooms:action.rooms
+            }
         case 'ON_MOVIEALL':
             return{
                 ...state,
@@ -34,6 +47,11 @@ export function ReducerShow(state,action){
             return {
                 ...state,  // 영화 리스트 상태는 유지
                 input: initialstateS.input  // movie만 초기화
+            }
+        case 'origin':
+            return{
+                ...state,
+                origin: action.origin
             }
     }
 

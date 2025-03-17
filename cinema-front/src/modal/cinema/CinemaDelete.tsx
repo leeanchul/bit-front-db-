@@ -29,7 +29,7 @@ export function CinemaDelete({showD,closeD,id,refresh}){
             onHide={closeD}
         >
             <Modal.Header closeButton>
-                <Modal.Title>극장 등록</Modal.Title>
+                <Modal.Title>{id}극장 등록</Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <h1>진짜로?

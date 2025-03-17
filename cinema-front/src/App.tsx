@@ -3,12 +3,16 @@ import {BrowserRouter, Route, Routes, useLocation} from "react-router-dom";
 import {MovieAll} from "./page/movie/MovieAll.tsx";
 import axios from "axios";
 import {MovieOne} from "./page/movie/MovieOne.tsx";
-import {Index} from "./page";
 import Nav from "./page/Nav.tsx";
 import {CinemaAll} from "./page/cinema/CinemaAll.tsx";
 import {CinemaOne} from "./page/cinema/CinemaOne.tsx";
 import { CinemaTest } from './page/cinema/CinemaTest.tsx';
-import { Info } from './Info.tsx';
+import { Info } from './page/Info.tsx';
+
+import { OAuthHandler } from './page/OAuthHandler.tsx';
+import { Index } from './page/Index.tsx';
+import { UserAll } from './page/UserAll.tsx';
+
 
 function Layout() {
     const location = useLocation();
@@ -25,6 +29,8 @@ function Layout() {
                 <Route path='/cinema/cinemaTest/:pageNo' element={<CinemaTest />}/>
                 <Route path='/cinema/cinemaOne/:spotName/:id' element={<CinemaOne />}/>
                 <Route path='/info' element={<Info />}/>
+                <Route path='/user' element={<UserAll/>} />
+                <Route path='/oauth' element={<OAuthHandler />} />
             </Routes>
         </>
     );

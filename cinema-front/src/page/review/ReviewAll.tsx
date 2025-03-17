@@ -66,7 +66,7 @@ export function ReviewAll({movieId}) {
 
     return (
         <>
-            <Button variant="dark" onClick={open}>댓글 달기</Button>
+            {/* <Button variant="dark" onClick={open}>댓글 달기</Button> */}
             <hr/>
             <ReviewInsert show={show} close={close} movieId={movieId} refresh={refresh}/>
             {state.reviewList.map(review => (

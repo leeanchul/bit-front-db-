@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 export function ShowInsert({showI,closeI,cinemaId,refresh}){
     const [state,dispatch]=useReducer(ReducerShow,initialstateS)
-    const {type,roomNum,age,movieId,showTime}=state.input
+    const {type,age,movieId,showTime}=state.input
 
     // const [imageSrc, setImageSrc] = useState('');
     // useEffect(() => {
@@ -44,26 +44,35 @@ export function ShowInsert({showI,closeI,cinemaId,refresh}){
  
     }
     const onInsert=()=>{
-        if(true){
 
+        if(type === '' || movieId === '' || age ==='' || showTime ==='' ||  cinemaId ===''){
+            Swal.fire({
+                icon: 'warning',
+                title: '모두 입력해주세요'
+            });
+            return
         }
-
 
         axios
         .post('http://localhost:9000/api/show/insert',
             {
-                type:type,movieId:movieId,age:age,showTime:showTime,roomNum:roomNum,cinemaId:cinemaId
+                type:type,movieId:movieId,age:age,showTime:showTime,cinemaId:cinemaId
             }
         ).then((resp)=>{
             const {data}=resp
             refresh()
-            closeI()
-                Swal.fire({
-                           icon: 'success',
-                           title: '영화 추가 되었습니다.'
-                       });
+            
+            Swal.fire({
+                icon: 'success',
+                title: '영화 추가 되었습니다.'
+            });
+        }).catch(()=>{
+            Swal.fire({
+                icon: 'error',
+                title: '관리자 전용'
+            });
         })
-        
+        closeI()
     }
 
     
@@ -104,7 +113,7 @@ export function ShowInsert({showI,closeI,cinemaId,refresh}){
                 상영 시간: <input type="number" min='100' step='10' name="showTime" onChange={onChange}/>
                  
                 <br />
-                상영관 : <input name="roomNum" onChange={onChange} />
+               
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={()=>{
